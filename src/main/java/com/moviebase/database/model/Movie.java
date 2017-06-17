@@ -15,7 +15,7 @@ public class Movie {
     private String name;
 
     @Column(name = "description")
-    private String decription;
+    private String description;
 
     @Column(name = "image")
     private byte[] image;
@@ -36,12 +36,12 @@ public class Movie {
         this.name = name;
     }
 
-    public String getDecription() {
-        return decription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDecription(String decription) {
-        this.decription = decription;
+    public void setDescription(String decription) {
+        this.description = decription;
     }
 
     public byte[] getImage() {
