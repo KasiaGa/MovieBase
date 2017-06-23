@@ -1,3 +1,28 @@
 body {
-    background-color: #2F4F4F;
+    background-color: #F0F0F0;
+}
+
+.nav-menu-logo {
+    left: 20px;
+}
+
+.nav-menu-left {
+    padding-left: 110px;
+}
+
+nav ul li:hover {
+    background-color: #000000;
+}
+
+.movies-container {
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.movie {
+    margin-top: 40px;
+}
+
+.card .card-action {
+    border-top: none;
 }
