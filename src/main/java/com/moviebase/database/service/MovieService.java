@@ -4,6 +4,9 @@ import com.moviebase.database.HibernateUtils;
 import com.moviebase.database.model.Movie;
 import org.hibernate.Session;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class MovieService {
@@ -13,6 +16,21 @@ public class MovieService {
         session.beginTransaction();
         List<Movie> movies = session.createQuery("FROM Movie", Movie.class).getResultList();
 
+        session.getTransaction().commit();
+        return movies;
+    }
+
+    public static List<Movie> getMoviesWithTileContains(String title){
+        Session session = HibernateUtils.getSession();
+        session.beginTransaction();
+
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Movie> query = cb.createQuery(Movie.class);
+        Root<Movie> m = query.from(Movie.class);
+        query.select(m);
+        query.where(cb.like(cb.lower(m.get("name")),"%"+title.toLowerCase()+"%"));
+
+        List<Movie> movies = session.createQuery(query).getResultList();
         session.getTransaction().commit();
         return movies;
     }
