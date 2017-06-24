@@ -12,9 +12,9 @@ public class Database {
         session.beginTransaction();
 
         Movie movie = new Movie();
-        movie.setName("Title");
-        movie.setDescription("Desc");
-        movie.setImage(getByteaImage("custom path"));
+        movie.setName("Inception (2010)");
+        movie.setDescription("A thief, who steals corporate secrets through use of dream-sharing technology, is given the inverse task of planting an idea into the mind of a CEO. ");
+        movie.setImage(getByteaImage("C:\\Users\\damia_000\\Desktop\\Studia\\Tai\\MovieBase\\src\\main\\resources\\static\\img\\Inception.jpg"));
 
         session.save(movie);
         session.getTransaction().commit();
