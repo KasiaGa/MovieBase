@@ -25,4 +25,9 @@ public class MovieBaseController {
     public String search() {
         return "search";
     }
+
+    @RequestMapping("/welcome")
+    public String welcome() {
+        return "welcome";
+    }
 }

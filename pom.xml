@@ -52,6 +52,12 @@
             <version>5.2.10.Final</version>
         </dependency>
 
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-oauth2</artifactId>
+			<version>v1-rev132-1.22.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
