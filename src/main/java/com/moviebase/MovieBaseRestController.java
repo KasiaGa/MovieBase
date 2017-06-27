@@ -7,6 +7,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.moviebase.database.model.Movie;
 import com.moviebase.database.model.User;
 import com.moviebase.database.service.MovieService;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -97,6 +98,19 @@ public class MovieBaseRestController {
             System.out.println("Invalid ID token.");
             return null;
         }
+    }
+
+    @RequestMapping(value = "/loggedin", method = RequestMethod.GET)
+    @ResponseBody
+    public boolean isLoggedIn() throws GeneralSecurityException, IOException {
+        if(token == null){
+            return false;
+        }
+        GoogleIdToken idToken = verifier.verify(token);
+        if (idToken == null) {
+            return false;
+        }
+        return true;
     }
 
 }
