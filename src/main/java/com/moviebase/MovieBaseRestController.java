@@ -82,7 +82,9 @@ public class MovieBaseRestController {
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     @ResponseBody
     public User getUserData() throws GeneralSecurityException, IOException {
-
+        if(token == null) {
+            return null;
+        }
         GoogleIdToken idToken = verifier.verify(token);
         if (idToken != null) {
             GoogleIdToken.Payload payload = idToken.getPayload();
