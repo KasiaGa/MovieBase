@@ -19,4 +19,9 @@ function signOut() {
     auth2.signOut().then(function () {
         console.log('User signed out.');
     });
+
+    var request = new XMLHttpRequest();
+    request.open('POST', 'https://localhost:8443/loggedout');
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.send("loggedout");
 }

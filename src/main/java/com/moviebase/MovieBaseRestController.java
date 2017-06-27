@@ -113,4 +113,16 @@ public class MovieBaseRestController {
         return true;
     }
 
+    @RequestMapping(value = "/loggedout", method = RequestMethod.POST)
+    ResponseEntity<?> logOut(@RequestBody String loggedOut) {
+        System.out.println("logged out");
+        System.out.println(loggedOut);
+        if (loggedOut.equals("loggedout=")) {
+            token = null;
+            System.out.println(token);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.noContent().build();
+    }
+
 }
