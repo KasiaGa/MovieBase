@@ -26,3 +26,18 @@ nav ul li:hover {
 .card .card-action {
     border-top: none;
 }
+
+.user-data {
+    padding-top: 20px;
+    padding-left: 40px;
+}
+
+.profile-img {
+    display: block;
+    margin: auto;
+    border-radius: 90px;
+}
+
+.profile-info {
+    text-align: center;
+}

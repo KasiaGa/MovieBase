@@ -22,9 +22,21 @@
 </header>
 <main>
     <div class="user-data" ng-controller="profileController">
-        <p>{{user.name}}</p>
-        <p>{{user.email}}</p>
-        <p><img src="{{user.image}}"/></p>
+        <div class="row">
+            <div class="col s2"></div>
+            <div class="col s8">
+                <div class="card white">
+                    <div class="card-content">
+                        <img class="profile-img" src="{{user.image}}"/>
+                        <h5 class="profile-info">{{user.name}}</h5>
+                        <div class="profile-info">
+                            <p>{{user.email}}</p>
+                            <p>Favorite Movies: 10</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 </body>
