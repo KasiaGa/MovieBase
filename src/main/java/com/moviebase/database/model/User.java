@@ -1,6 +1,7 @@
 package com.moviebase.database.model;
 
 import javax.persistence.*;
+import java.util.Map;
 
 @Entity
 @Table(name = "\"user\"")
@@ -61,5 +62,12 @@ public class User {
         this.name = name;
         this.email = email;
         this.imageUrl = imageUrl;
+    }
+
+    public User(Map<String, Object> map){
+        this.id = (int) map.get("id");
+        this.name = (String) map.get("name");
+        this.email = (String) map.get("email");
+        this.imageUrl = (String) map.get("imageUrl");
     }
 }
