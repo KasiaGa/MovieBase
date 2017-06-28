@@ -23,6 +23,10 @@ public class Like {
     @Column(name = "date")
     private Date date;
 
+    public Like() {
+
+    }
+
     public int getId() {
         return id;
     }

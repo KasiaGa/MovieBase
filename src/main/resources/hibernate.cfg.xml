@@ -9,6 +9,8 @@
         <property name="connection.username">postgres</property>
         <property name="connection.password">postgres</property>
 
+        <property name="connection.pool_size">100</property>
+
         <!-- SQL dialect -->
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL82Dialect</property>
 

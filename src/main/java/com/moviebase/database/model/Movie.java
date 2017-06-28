@@ -21,6 +21,9 @@ public class Movie {
     @Column(name = "image")
     private byte[] image;
 
+    public Movie() {
+    }
+
     public int getId() {
         return id;
     }
@@ -57,6 +60,6 @@ public class Movie {
         this.id = (int) map.get("id");
         this.name = (String) map.get("name") ;
         this.description = (String) map.get("description");
-        this.image = (byte[]) map.get("image") ;
+        this.image = ((String) map.get("image")).getBytes() ;
     }
 }

@@ -29,7 +29,7 @@ public class LikeService {
         session.getTransaction().commit();
     }
 
-    public boolean isLikes(int movieID, int userID){
+    public static boolean isLikes(int movieID, int userID){
        try{
            Session session = HibernateUtils.getSession();
            session.beginTransaction();

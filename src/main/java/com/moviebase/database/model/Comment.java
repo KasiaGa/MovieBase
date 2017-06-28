@@ -14,7 +14,7 @@ public class Comment {
     @Column(name = "id")
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "movie_id")
     private Movie movie;
 
@@ -27,6 +27,17 @@ public class Comment {
 
     @Column(name = "content")
     private String content;
+
+    public Comment() {
+
+    }
+
+    public Comment(Movie movie, User user, Date date, String content) {
+        this.movie = movie;
+        this.user = user;
+        this.date = date;
+        this.content = content;
+    }
 
     public int getId() {
         return id;
