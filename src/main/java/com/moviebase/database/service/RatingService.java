@@ -30,7 +30,7 @@ public class RatingService {
         session.getTransaction().commit();
     }
 
-    public int getFilmRating(int movieID){
+    public static int getFilmRating(int movieID){
         Session session = HibernateUtils.getSession();
         session.beginTransaction();
         List<Rating> ratings = session.createQuery("FROM Rating r WHERE r.movie.id = :movieID", Rating.class).setParameter("movieID", movieID).getResultList();
@@ -44,7 +44,7 @@ public class RatingService {
         return count>0?Math.round(ratingSum/count):0;
     }
 
-    public int getUserRating(int movieID, int userID){
+    public static int getUserRating(int movieID, int userID){
         try {
             Session session = HibernateUtils.getSession();
             session.beginTransaction();
