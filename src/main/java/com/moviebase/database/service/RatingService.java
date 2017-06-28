@@ -4,6 +4,7 @@ import com.moviebase.database.HibernateUtils;
 import com.moviebase.database.model.Rating;
 import org.hibernate.Session;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
 public class RatingService {
@@ -29,7 +30,7 @@ public class RatingService {
         session.getTransaction().commit();
     }
 
-    public float getFilmRating(int movieID){
+    public int getFilmRating(int movieID){
         Session session = HibernateUtils.getSession();
         session.beginTransaction();
         List<Rating> ratings = session.createQuery("FROM Rating r WHERE r.movie.id = :movieID", Rating.class).setParameter("movieID", movieID).getResultList();
@@ -41,5 +42,16 @@ public class RatingService {
         }
         session.getTransaction().commit();
         return count>0?Math.round(ratingSum/count):0;
+    }
+
+    public int getUserRating(int movieID, int userID){
+        try {
+            Session session = HibernateUtils.getSession();
+            session.beginTransaction();
+            Rating rating = session.createQuery("FROM Rating r WHERE r.movie.id = :movieID AND r.user.id = :userID", Rating.class).setParameter("movieID", movieID).setParameter("userID", userID).getSingleResult();
+            return rating.getScore();
+        } catch (NoResultException e){
+            return -1;
+        }
     }
 }
