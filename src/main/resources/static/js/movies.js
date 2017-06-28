@@ -2,6 +2,7 @@ angular.module('moviebase', []).controller('repeatController', ['$scope', '$http
 
     var user;
     var movie1;
+    var liked;
 
     $http.get('/loggedin').
         then(function (response) {
@@ -48,6 +49,15 @@ angular.module('moviebase', []).controller('repeatController', ['$scope', '$http
                     $(".my-rating").append('<i class="material-icons" style="font-size:35px;">star</i>');
                 }
             }
+
+            if($scope.movieDetails.like == true) {
+                $(".like").html('<i class="material-icons" style="font-size:35px;">favorite</i>');
+                liked = true;
+            }
+            else {
+                $(".like").html('<i class="material-icons" style="font-size:35px;">favorite_border</i>');
+                liked = false;
+            }
         });
     };
 
@@ -63,6 +73,23 @@ angular.module('moviebase', []).controller('repeatController', ['$scope', '$http
                 $scope.movieDetails = response.data;
                 $scope.comments = $scope.movieDetails.commentList;
             });
+        });
+    };
+
+    $scope.LikeMovie = function () {
+        liked = !liked;
+        var data = {
+            "liked": liked,
+            "userId": user.id,
+            "movieId": movie1.id
+        };
+        $http.post('/liked', data).then(function () {
+            if(liked == true) {
+                $(".like").html('<i class="material-icons" style="font-size:35px;">favorite</i>');
+            }
+            else {
+                $(".like").html('<i class="material-icons" style="font-size:35px;">favorite_border</i>');
+            }
         });
     };
 }]);

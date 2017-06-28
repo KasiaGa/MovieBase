@@ -41,7 +41,7 @@ public class LikeService {
        }
     }
 
-    public void deleteLike(int movieID, int userID) {
+    public static void deleteLike(int movieID, int userID) {
         try {
             Session session = HibernateUtils.getSession();
             session.beginTransaction();

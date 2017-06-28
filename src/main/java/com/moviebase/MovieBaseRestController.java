@@ -4,10 +4,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.apache.ApacheHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.moviebase.database.model.Comment;
-import com.moviebase.database.model.Movie;
-import com.moviebase.database.model.MovieDetails;
-import com.moviebase.database.model.User;
+import com.moviebase.database.model.*;
 import com.moviebase.database.service.*;
 import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.context.annotation.Scope;
@@ -72,7 +69,7 @@ public class MovieBaseRestController {
                 System.out.println(pictureUrl);
                 System.out.println(email);
 
-                if(UserService.getUserByEmail(payload.getEmail()) == null) {
+                if (UserService.getUserByEmail(payload.getEmail()) == null) {
                     UserService.save(new User(name, email, pictureUrl));
                 }
 
@@ -87,7 +84,7 @@ public class MovieBaseRestController {
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     @ResponseBody
     public User getUserData() throws GeneralSecurityException, IOException {
-        if(token == null) {
+        if (token == null) {
             return null;
         }
         GoogleIdToken idToken = verifier.verify(token);
@@ -107,7 +104,7 @@ public class MovieBaseRestController {
     @RequestMapping(value = "/loggedin", method = RequestMethod.GET)
     @ResponseBody
     public boolean isLoggedIn() throws GeneralSecurityException, IOException {
-        if(token == null){
+        if (token == null) {
             return false;
         }
         GoogleIdToken idToken = verifier.verify(token);
@@ -133,10 +130,9 @@ public class MovieBaseRestController {
     @ResponseBody
     public User getUser() throws GeneralSecurityException, IOException {
         GoogleIdToken idToken = verifier.verify(token);
-        if(idToken == null) {
+        if (idToken == null) {
             return null;
-        }
-        else {
+        } else {
             GoogleIdToken.Payload payload = idToken.getPayload();
             return UserService.getUserByEmail(payload.getEmail());
         }
@@ -146,9 +142,9 @@ public class MovieBaseRestController {
     ResponseEntity<?> postComment(@RequestBody Map<String, Object> data) {
         if (data != null) {
             System.out.println(data.get("movie"));
-            Map<String, Object> movieMap = ((Map<String, Object>)data.get("movie"));
-            Map<String, Object> userMap = ((Map<String, Object>)data.get("user"));
-            CommentService.save(new Comment(new Movie(movieMap), new User(userMap), new Date(), (String)data.get("content")));
+            Map<String, Object> movieMap = ((Map<String, Object>) data.get("movie"));
+            Map<String, Object> userMap = ((Map<String, Object>) data.get("user"));
+            CommentService.save(new Comment(new Movie(movieMap), new User(userMap), new Date(), (String) data.get("content")));
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.noContent().build();
@@ -167,6 +163,20 @@ public class MovieBaseRestController {
         data.put("rating", RatingService.getFilmRating(movieId));
         data.put("like", LikeService.isLikes(movieId, UserService.getUserByEmail(payload.getEmail()).getId()));*/
         return movieDetails;
+    }
+
+    @RequestMapping(value = "/liked", method = RequestMethod.POST)
+    ResponseEntity<?> like(@RequestBody Map<String, Object> like) {
+        boolean liked = (Boolean)like.get("liked");
+        if(liked) {
+            LikeService.save(new Like(MovieService.getMovieById((Integer)like.get("movieId")), UserService.getUser((Integer)like.get("userId")), new Date()));
+        }
+        else {
+
+            LikeService.deleteLike((Integer)like.get("movieId"), (Integer)like.get("userId"));
+        }
+        return ResponseEntity.ok().build();
+
     }
 
 }

@@ -27,6 +27,12 @@ public class Like {
 
     }
 
+    public Like(Movie movie, User user, Date date) {
+        this.movie = movie;
+        this.user = user;
+        this.date = date;
+    }
+
     public int getId() {
         return id;
     }
