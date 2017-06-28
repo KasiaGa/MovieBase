@@ -24,6 +24,13 @@ public class UserService {
        return user;
    }
 
+   public static User getUserByEmail(String email){
+       Session session = HibernateUtils.getSession();
+       session.beginTransaction();
+       User user = session.createQuery("FROM User u WHERE u.email = :email", User.class).setParameter("email",email).getSingleResult();
+       return user;
+   }
+
    public static int save(User user){
        Session session = HibernateUtils.getSessionFactory().openSession();
        session.beginTransaction();
