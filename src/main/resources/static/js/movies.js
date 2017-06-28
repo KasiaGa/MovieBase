@@ -33,6 +33,8 @@ angular.module('moviebase', []).controller('repeatController', ['$scope', '$http
             $scope.movieDetails = response.data;
             $scope.comments = $scope.movieDetails.commentList;
             var rating = $scope.movieDetails.rating;
+            $(".rating").html("");
+            $(".my-rating").html("");
             for(i = 0; i < rating; i++) {
                 $(".rating").append('<i class="material-icons" style="font-size:35px;">star</i>');
             }
