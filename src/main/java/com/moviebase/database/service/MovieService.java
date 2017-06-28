@@ -4,6 +4,7 @@ import com.moviebase.database.HibernateUtils;
 import com.moviebase.database.model.Movie;
 import org.hibernate.Session;
 
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -41,5 +42,16 @@ public class MovieService {
         List<Movie> movies = session.createQuery(query).getResultList();
         session.getTransaction().commit();
         return movies;
+    }
+
+    public static Movie getMovieById(int id){
+        try {
+            Session session = HibernateUtils.getSession();
+            session.beginTransaction();
+            Movie movie = session.createQuery("FROM Movie m WHERE m.id = :id", Movie.class).setParameter("id", id).getSingleResult();
+            return movie;
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }
