@@ -2,6 +2,8 @@ package com.moviebase.database.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Map;
+import java.util.Objects;
 
 @Entity
 @Table(name = "comment")
@@ -64,5 +66,13 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Comment(Map<String, Object> map){
+        this.id = (int) map.get("id");
+        this.movie = new Movie((Map<String, Object>) map.get("movie"));
+        this.user = new User((Map<String, Object>) map.get("user"));
+        this.content = (String) map.get("content");
+        this.date = (Date) map.get("date");
     }
 }
