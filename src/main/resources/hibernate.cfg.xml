@@ -18,5 +18,9 @@
         <!-- Drop and re-create the database schema on startup -->
         <property name="hbm2ddl.auto">update</property>
         <mapping class="com.moviebase.database.model.Movie"/>
+        <mapping class="com.moviebase.database.model.User"/>
+        <mapping class="com.moviebase.database.model.Like"/>
+        <mapping class="com.moviebase.database.model.Comment"/>
+        <mapping class="com.moviebase.database.model.Rating"/>
     </session-factory>
 </hibernate-configuration>

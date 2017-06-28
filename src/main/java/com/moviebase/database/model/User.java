@@ -1,10 +1,36 @@
 package com.moviebase.database.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "user")
 public class User {
 
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "email")
     private String email;
-    private String image;
+
+    @Column(name = "image_url")
+    private String imageUrl;
+
+    public User() {
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -22,18 +48,18 @@ public class User {
         this.email = email;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public User(String name, String email, String image) {
+    public User(String name, String email, String imageUrl) {
 
         this.name = name;
         this.email = email;
-        this.image = image;
+        this.imageUrl = imageUrl;
     }
 }
