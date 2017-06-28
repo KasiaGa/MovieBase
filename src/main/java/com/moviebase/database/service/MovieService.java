@@ -20,6 +20,14 @@ public class MovieService {
         return movies;
     }
 
+    public static List<Movie> getAllLikedMovies(int userID){
+        Session session = HibernateUtils.getSession();
+        session.beginTransaction();
+        List<Movie> movies = session.createQuery("SELECT l.movie FROM Like l WHERE l.user.id = :userID", Movie.class).setParameter("userID",userID).getResultList();
+        session.getTransaction().commit();
+        return movies;
+    }
+
     public static List<Movie> getMoviesWithTileContains(String title){
         Session session = HibernateUtils.getSession();
         session.beginTransaction();

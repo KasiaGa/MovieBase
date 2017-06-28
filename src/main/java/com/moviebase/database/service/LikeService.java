@@ -40,4 +40,17 @@ public class LikeService {
            return false;
        }
     }
+
+    public void deleteLike(int movieID, int userID) {
+        try {
+            Session session = HibernateUtils.getSession();
+            session.beginTransaction();
+            Like like = session.createQuery("FROM Like l WHERE l.movie.id = :movieID AND l.user.id = :userID", Like.class)
+                    .setParameter("movieID", movieID).setParameter("userID", userID).getSingleResult();
+            session.delete(like);
+            session.getTransaction().commit();
+        } catch (NoResultException e) {
+
+        }
+    }
 }
