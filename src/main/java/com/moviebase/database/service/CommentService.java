@@ -11,7 +11,7 @@ public class CommentService {
     public static List<Comment> getCommentsByMovieId(int movieId) {
             Session session = HibernateUtils.getSession();
             session.beginTransaction();
-            List<Comment> comments = session.createQuery("FROM Comment c WHERE c.movie.id = :movieId ORDER BY c.date DESC", Comment.class).setParameter("movieId", movieId).getResultList();
+            List<Comment> comments = session.createQuery("FROM Comment c WHERE c.movie.id = :movieId ORDER BY c.id DESC", Comment.class).setParameter("movieId", movieId).getResultList();
             return comments;
     }
 
