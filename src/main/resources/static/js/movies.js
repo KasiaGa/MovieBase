@@ -88,6 +88,7 @@ angular.module('moviebase', []).controller('repeatController', ['$scope', '$http
     };
 
     $scope.SendData = function () {
+        $(".comment-area").val("");
         var data = {
             "user": user,
             "movie": movie1,
