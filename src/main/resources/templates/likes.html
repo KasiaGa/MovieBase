@@ -7,22 +7,89 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script async='async' src="https://apis.google.com/js/platform.js"></script>
     <meta name="google-signin-client_id" content="499994604519-bko4r5964o6hm1bst63qla0j205853ds.apps.googleusercontent.com"/>
     <script async='async' src="https://apis.google.com/js/platform.js?onload=onLoad"></script>
     <script src="js/script.js" type="text/javascript"></script>
     <script src="js/navbar.js" type="text/javascript"></script>
-    <script src="js/loginCheck.js" type="text/javascript"></script>
+    <script src="js/likes.js" type="text/javascript"></script>
     <script src="js/login.js" type="text/javascript"></script>
     <script src="js/init.js" type="text/javascript"></script>
+    <script src="js/movieDetails.js" type="text/javascript"></script>
     <link href="css/style.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
-<div ng-controller = "loginCheckController"></div>
-<nav id="navigation">
-</nav>
+<header>
+    <nav id="navigation">
+    </nav>
+</header>
+<main ng-controller="repeatController">
+    <div class="row">
+        <div class="movies-container">
+            <div class="col m4" ng-repeat="movie in movies">
+                <div class="card horizontal movie" ng-click="showMovieDetails(movie)">
+                    <div class="card-image">
+                        <img ng-src="data:image/JPEG;base64,{{movie.image}}"/>
+                    </div>
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <h5>{{movie.name}}</h5>
+                            <p>{{movie.description}}</p>
+                        </div>
+                        <div class="card-action">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="movie-details">
+        <div class="top-bar">
+            <i class="material-icons close-icon" onclick="closeMovieDetails()">clear</i>
+            <h5 class="movie-title"></h5>
+        </div>
+        <div class="line"></div>
+        <div class="movie-left">
+            <img class="movie-image"/>
+            <div class="rating">
+            </div>
+            <div class="my-rating">
+            </div>
+            <div class="like" ng-click="LikeMovie()">
+                <i class="material-icons" style="font-size:35px;">favorite_border</i>
+            </div>
+        </div>
+        <div class="comments">
+            <div class="comment">
+                <div class="comment-user">
+                    <img class="comment-image comment-image-mine"/>
+                    <h6 class="comment-username comment-username-mine">User1</h6>
+                </div>
+                <div class="comment-text">
+                    <div class="input-field">
+                    <textarea id="textarea1" class="materialize-textarea" placeholder="Add comment..."
+                              ng-model="commentContent"></textarea>
+                        <a class="waves-effect waves-light btn col" ng-click="SendData()">post</a>
+                    </div>
+                </div>
+            </div>
+            <div class="user-comments" ng-repeat="comment in comments">
+                <div class="comment">
+                    <div class="comment-user">
+                        <img class="comment-image" src="{{comment.user.imageUrl}}"/>
+                        <h6 class="comment-username">{{comment.user.name}}</h6>
+                    </div>
+                    <div class="comment-text">
+                        <p>{{comment.content}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
 </body>
 </html>

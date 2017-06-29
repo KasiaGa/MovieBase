@@ -186,4 +186,12 @@ public class MovieBaseRestController {
         return RatingService.getFilmRating(movieId);
     }
 
+    @RequestMapping(value = "/likedmovies", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Movie> getLikedMovies() throws GeneralSecurityException, IOException {
+        GoogleIdToken idToken = verifier.verify(token);
+        GoogleIdToken.Payload payload = idToken.getPayload();
+        return MovieService.getAllLikedMovies(UserService.getUserByEmail(payload.getEmail()).getId());
+    }
+
 }
