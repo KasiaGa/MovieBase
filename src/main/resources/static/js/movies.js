@@ -37,10 +37,10 @@ angular.module('moviebase', []).controller('repeatController', ['$scope', '$http
             $(".rating").html("");
             $(".my-rating").html("");
             for(i = 0; i < rating; i++) {
-                $(".rating").append('<i class="material-icons" style="font-size:35px;">star</i>');
+                $(".rating").append('<i class="material-icons star" style="font-size:35px;">star</i>');
             }
             for(i = rating; i < 5; i++) {
-                $(".rating").append('<i class="material-icons" style="font-size:35px;">star_border</i>');
+                $(".rating").append('<i class="material-icons star" style="font-size:35px;">star_border</i>');
             }
 
             var userRating = $scope.movieDetails.userRating;
@@ -58,6 +58,32 @@ angular.module('moviebase', []).controller('repeatController', ['$scope', '$http
                 $(".like").html('<i class="material-icons" style="font-size:35px;">favorite_border</i>');
                 liked = false;
             }
+
+            $(".star").click(function(){
+                var rating = ($(".star").index(this)) + 1;
+                var data = {
+                    "user": user,
+                    "movie": movie1,
+                    "rating": rating
+                };
+                $(".my-rating").html("");
+                $http.post('/rating', data).then(function () {
+                    for (i = 0; i < rating; i++) {
+                        $(".my-rating").append('<i class="material-icons" style="font-size:35px;">star</i>');
+                    }
+
+                    $http.get('/getrating/' + movie1.id).then(function (response) {
+                        var currentRating = response.data;
+                        $(".rating").html("");
+                        for(i = 0; i < currentRating; i++) {
+                            $(".rating").append('<i class="material-icons star" style="font-size:35px;">star</i>');
+                        }
+                        for(i = currentRating; i < 5; i++) {
+                            $(".rating").append('<i class="material-icons star" style="font-size:35px;">star_border</i>');
+                        }
+                    });
+                });
+            });
         });
     };
 

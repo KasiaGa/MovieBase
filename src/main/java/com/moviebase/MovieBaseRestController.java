@@ -158,25 +158,32 @@ public class MovieBaseRestController {
 
         MovieDetails movieDetails = new MovieDetails(RatingService.getFilmRating(movieId), RatingService.getUserRating(movieId, UserService.getUserByEmail(payload.getEmail()).getId()), LikeService.isLikes(movieId, UserService.getUserByEmail(payload.getEmail()).getId()), CommentService.getCommentsByMovieId(movieId));
 
-        /*Map<String, Object> data = new HashMap<>();
-        data.put("commentList", CommentService.getCommentsByMovieId(movieId));
-        data.put("rating", RatingService.getFilmRating(movieId));
-        data.put("like", LikeService.isLikes(movieId, UserService.getUserByEmail(payload.getEmail()).getId()));*/
         return movieDetails;
     }
 
     @RequestMapping(value = "/liked", method = RequestMethod.POST)
     ResponseEntity<?> like(@RequestBody Map<String, Object> like) {
-        boolean liked = (Boolean)like.get("liked");
-        if(liked) {
-            LikeService.save(new Like(MovieService.getMovieById((Integer)like.get("movieId")), UserService.getUser((Integer)like.get("userId")), new Date()));
-        }
-        else {
+        boolean liked = (Boolean) like.get("liked");
+        if (liked) {
+            LikeService.save(new Like(MovieService.getMovieById((Integer) like.get("movieId")), UserService.getUser((Integer) like.get("userId")), new Date()));
+        } else {
 
-            LikeService.deleteLike((Integer)like.get("movieId"), (Integer)like.get("userId"));
+            LikeService.deleteLike((Integer) like.get("movieId"), (Integer) like.get("userId"));
         }
         return ResponseEntity.ok().build();
 
+    }
+
+    @RequestMapping(value = "/rating", method = RequestMethod.POST)
+    ResponseEntity<?> rating(@RequestBody Map<String, Object> data) {
+        RatingService.save(new Rating(new Movie((Map<String, Object>) data.get("movie")), new User((Map<String, Object>) data.get("user")), (Integer) data.get("rating")));
+        return ResponseEntity.ok().build();
+    }
+
+    @RequestMapping(value = "/getrating/{movieId}", method = RequestMethod.GET)
+    @ResponseBody
+    public int getRating(@PathVariable int movieId) throws GeneralSecurityException, IOException {
+        return RatingService.getFilmRating(movieId);
     }
 
 }

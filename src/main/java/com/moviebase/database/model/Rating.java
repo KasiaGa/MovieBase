@@ -22,6 +22,16 @@ public class Rating {
     @Column(name ="score")
     private int score;
 
+    public Rating(Movie movie, User user, int score) {
+        this.movie = movie;
+        this.user = user;
+        this.score = score;
+    }
+
+    public Rating() {
+
+    }
+
     public int getId() {
         return id;
     }
